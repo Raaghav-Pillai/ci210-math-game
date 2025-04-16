@@ -1,57 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Math Duel</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script defer src="script.js"></script>
-</head>
-<body>
-  <!-- Start Screen -->
-  <div id="start-screen" class="screen">
-    <h1>🧠 Math Duel 🎮</h1>
-    <button class="button" onclick="goToClassScreen()">Start Game</button>
-  </div>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Duel</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen">
+      <h1>🧠 Math Duel 🎮</h1>
+      <button class="button" onclick="goToClassScreen()">Start Game</button>
+    </div>
 
-  <!-- Class Selection Screen -->
-  <div id="class-screen" class="screen">
-    <h2>Select Your Class</h2>
-    <div id="class-buttons"></div>
-  </div>
+    <!-- Class Selection Screen -->
+    <div id="class-screen" class="screen">
+      <h2>Select Your Class</h2>
+      <div id="class-buttons"></div>
+    </div>
 
-  <!-- Game Screen -->
-  <div id="game-screen" class="screen">
-    <div id="player-turn">Player 1's Turn</div>
-    <div id="timer">Time: 30</div>
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+      <div id="player-turn">Player 1's Turn</div>
+      <div id="timer">Time: 30</div>
 
-    <div class="health-section">
-      <div class="health-container">
-        <div>Player 1 HP</div>
-        <div class="health-bar"><div id="player1-health" class="health-fill"></div></div>
+      <div class="health-section">
+        <div class="health-container">
+          <div>Player 1 HP</div>
+          <div class="health-bar"><div id="player1-health" class="health-fill"></div></div>
+        </div>
+        <div class="health-container">
+          <div>Player 2 HP</div>
+          <div class="health-bar"><div id="player2-health" class="health-fill"></div></div>
+        </div>
       </div>
-      <div class="health-container">
-        <div>Player 2 HP</div>
-        <div class="health-bar"><div id="player2-health" class="health-fill"></div></div>
+
+      <div id="middle-section">
+        <div id="question">What is 123 + 456?</div>
+        <input type="text" id="answer-input" placeholder="Answer" onkeydown="if(event.key === 'Enter') submitAnswer()">
+        <button class="button" onclick="submitAnswer()">Submit</button>
+      </div>
+
+      <div class="characters">
+        <img id="player1-img" src="assets/player1.png" alt="Player 1">
+        <img id="player2-img" src="assets/player2.png" alt="Player 2">
       </div>
     </div>
 
-    <div id="middle-section">
-      <div id="question">What is 123 + 456?</div>
-      <input type="text" id="answer-input" placeholder="Answer" onkeydown="if(event.key === 'Enter') submitAnswer()">
-    </div>
-
-    <div class="characters">
-      <img id="player1-img" src="assets/player1.png" alt="Player 1">
-      <img id="player2-img" src="assets/player2.png" alt="Player 2">
-    </div>
-  </div>
-
-  <audio id="bg-music" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_f22c1f4002.mp3?filename=happy-pop-113856.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-  </audio>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <audio id="bg-music" loop>
+      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_f22c1f4002.mp3?filename=happy-pop-113856.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  </body>
+  </html>

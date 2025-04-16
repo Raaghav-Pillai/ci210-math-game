@@ -30,6 +30,7 @@ body {
     cursor: pointer;
     box-shadow: 2px 4px 0px #d99a00;
     margin: 10px;
+    touch-action: manipulation;
   }
   
   .button:hover {
@@ -84,6 +85,7 @@ body {
     font-size: 22px;
     padding: 10px;
     width: 120px;
+    touch-action: manipulation;
   }
   
   #player-turn, #timer {
@@ -102,3 +104,41 @@ body {
     width: 240px;
     height: auto;
   }
+  
+  @media (max-width: 768px) {
+    .health-section {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .health-container {
+      width: 90%;
+    }
+  
+    #middle-section {
+      margin: 20px 0;
+    }
+  
+    #answer-input {
+      width: 80%;
+    }
+  
+    .characters {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .characters img {
+      width: 150px;
+    }
+  
+    .button {
+      width: 80%;
+      font-size: 18px;
+    }
+  
+    #class-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }  
