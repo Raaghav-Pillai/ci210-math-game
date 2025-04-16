@@ -1,0 +1,104 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-image: url('https://www.transparenttextures.com/patterns/cartographer.png');
+    background-color: #f0f8ff;
+  }
+  
+  .screen {
+    display: none;
+    min-height: 100vh;
+    padding: 30px 20px;
+  }
+  
+  #start-screen, #class-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .button {
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ffcc00;
+    cursor: pointer;
+    box-shadow: 2px 4px 0px #d99a00;
+    margin: 10px;
+  }
+  
+  .button:hover {
+    background-color: #ff9900;
+  }
+  
+  #class-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .health-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .health-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+  }
+  
+  .health-bar {
+    height: 25px;
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+  
+  .health-fill {
+    height: 100%;
+    background-color: #ff4d4d;
+    width: 100%;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  #middle-section {
+    margin: 30px 0;
+  }
+  
+  #question {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  
+  #answer-input {
+    font-size: 22px;
+    padding: 10px;
+    width: 120px;
+  }
+  
+  #player-turn, #timer {
+    font-size: 20px;
+    margin: 10px;
+  }
+  
+  .characters {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .characters img {
+    width: 240px;
+    height: auto;
+  }

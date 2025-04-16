@@ -3,112 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Math Duel</title>
-  <style>
-    body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      background-image: url('https://www.transparenttextures.com/patterns/cartographer.png');
-      background-color: #f0f8ff;
-    }
-
-    .screen {
-      display: none;
-      min-height: 100vh;
-      padding: 30px 20px;
-    }
-
-    #start-screen {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .button {
-      padding: 15px 30px;
-      font-size: 20px;
-      border: none;
-      border-radius: 10px;
-      background-color: #ffcc00;
-      cursor: pointer;
-      box-shadow: 2px 4px 0px #d99a00;
-    }
-
-    .button:hover {
-      background-color: #ff9900;
-    }
-
-    .health-section {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-    }
-
-    .health-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 40%;
-    }
-
-    .health-bar {
-      height: 25px;
-      width: 100%;
-      background-color: #ddd;
-      border-radius: 20px;
-      overflow: hidden;
-      margin: 8px 0;
-    }
-
-    .health-fill {
-      height: 100%;
-      background-color: #ff4d4d;
-      width: 100%;
-      transition: width 0.3s ease-in-out;
-    }
-
-    #middle-section {
-      margin: 30px 0;
-    }
-
-    #question {
-      font-size: 28px;
-      margin-bottom: 15px;
-    }
-
-    #answer-input {
-      font-size: 22px;
-      padding: 10px;
-      width: 120px;
-    }
-
-    #player-turn, #timer {
-      font-size: 20px;
-      margin: 10px;
-    }
-
-    .characters {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-top: 20px;
-    }
-
-    .characters img {
-      width: 240px;
-      height: auto;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
-
   <!-- Start Screen -->
   <div id="start-screen" class="screen">
     <h1>🧠 Math Duel 🎮</h1>
-    <button class="button" onclick="startGame()">Start Game</button>
+    <button class="button" onclick="goToClassScreen()">Start Game</button>
+  </div>
+
+  <!-- Class Selection Screen -->
+  <div id="class-screen" class="screen">
+    <h2>Select Your Class</h2>
+    <div id="class-buttons"></div>
   </div>
 
   <!-- Game Screen -->
@@ -129,7 +38,7 @@
 
     <div id="middle-section">
       <div id="question">What is 123 + 456?</div>
-      <input type="number" id="answer-input" placeholder="Answer" onkeydown="if(event.key === 'Enter') submitAnswer()">
+      <input type="text" id="answer-input" placeholder="Answer" onkeydown="if(event.key === 'Enter') submitAnswer()">
     </div>
 
     <div class="characters">
@@ -138,119 +47,11 @@
     </div>
   </div>
 
-  <!-- Background Music -->
   <audio id="bg-music" loop>
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_f22c1f4002.mp3?filename=happy-pop-113856.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
 
-  <script>
-    let currentPlayer = 1;
-    let player1HP = 100;
-    let player2HP = 100;
-    let timeLeft = 30;
-    let timer;
-    let correctAnswer = 0;
-
-    function startGame() {
-      document.getElementById("start-screen").style.display = "none";
-      document.getElementById("game-screen").style.display = "block";
-
-      const music = document.getElementById("bg-music");
-      music.volume = 0.4;
-      music.play().catch((err) => {
-        console.log("Autoplay blocked:", err);
-      });
-
-      resetHealthBars();
-      startTurn();
-    }
-
-    function startTurn() {
-      document.getElementById("answer-input").value = "";
-      document.getElementById("player-turn").innerText = `Player ${currentPlayer}'s Turn`;
-      timeLeft = 30;
-      updateTimerDisplay();
-      generateQuestion();
-      timer = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        if (timeLeft <= 0) endTurn();
-      }, 1000);
-    }
-
-    function updateTimerDisplay() {
-      document.getElementById("timer").innerText = `Time: ${timeLeft}`;
-    }
-
-    function generateQuestion() {
-      const a = Math.floor(Math.random() * 9 + 1);
-      const b = Math.floor(Math.random() * 9+ 1);
-      const ops = ["+", "-", "*"];
-      const op = ops[Math.floor(Math.random() * ops.length)];
-      document.getElementById("question").innerText = `What is ${a} ${op} ${b}?`;
-
-      switch (op) {
-        case "+": correctAnswer = a + b; break;
-        case "-": correctAnswer = a - b; break;
-        case "*": correctAnswer = a * b; break;
-      }
-    }
-
-    function submitAnswer() {
-      const userAnswer = parseInt(document.getElementById("answer-input").value);
-      const p1 = document.getElementById("player1-img");
-      const p2 = document.getElementById("player2-img");
-
-      if (userAnswer === correctAnswer) {
-        if (currentPlayer === 1) {
-          player2HP -= 5;
-          updateHealthBar("player2-health", player2HP);
-          p1.src = "assets/player1-punch.png";
-          setTimeout(() => p1.src = "assets/player1.png", 400);
-          if (player2HP <= 0) return endGame(1);
-        } else {
-          player1HP -= 5;
-          updateHealthBar("player1-health", player1HP);
-          p2.src = "assets/player2-punch.png";
-          setTimeout(() => p2.src = "assets/player2.png", 400);
-          if (player1HP <= 0) return endGame(2);
-        }
-        generateQuestion();
-      } else {
-        if (currentPlayer === 1) {
-          p1.src = "assets/player1-stun.png";
-          setTimeout(() => p1.src = "assets/player1.png", 400);
-        } else {
-          p2.src = "assets/player2-stun.png";
-          setTimeout(() => p2.src = "assets/player2.png", 400);
-        }
-        endTurn();
-      }
-
-      document.getElementById("answer-input").value = "";
-    }
-
-    function endTurn() {
-      clearInterval(timer);
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      setTimeout(startTurn, 500);
-    }
-
-    function endGame(winner) {
-      clearInterval(timer);
-      alert(`🎉 Player ${winner} wins!`);
-      location.reload();
-    }
-
-    function updateHealthBar(id, hp) {
-      document.getElementById(id).style.width = hp + "%";
-    }
-
-    function resetHealthBars() {
-      updateHealthBar("player1-health", 100);
-      updateHealthBar("player2-health", 100);
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
