@@ -59,6 +59,7 @@ function loadQuestionsForClass(cls) {
 function startTurn() {
   document.getElementById("answer-input").value = "";
   document.getElementById("player-turn").innerText = `Player ${currentPlayer}'s Turn`;
+  document.getElementById("feedback").textContent = "";
   timeLeft = 30;
   updateTimerDisplay();
   generateQuestion();
@@ -84,8 +85,10 @@ function submitAnswer() {
   const userAnswer = document.getElementById("answer-input").value.trim();
   const p1 = document.getElementById("player1-img");
   const p2 = document.getElementById("player2-img");
+  const feedback = document.getElementById("feedback");
 
   if (userAnswer === correctAnswer) {
+    feedback.textContent = "";
     if (currentPlayer === 1) {
       player2HP -= 5;
       updateHealthBar("player2-health", player2HP);
@@ -101,6 +104,7 @@ function submitAnswer() {
     }
     generateQuestion();
   } else {
+    feedback.textContent = `❌ Correct answer was ${correctAnswer}`;
     if (currentPlayer === 1) {
       p1.src = "assets/player1-stun.png";
       setTimeout(() => p1.src = "assets/player1.png", 400);
@@ -108,7 +112,12 @@ function submitAnswer() {
       p2.src = "assets/player2-stun.png";
       setTimeout(() => p2.src = "assets/player2.png", 400);
     }
-    endTurn();
+
+    clearInterval(timer); // Pause timer
+    setTimeout(() => {
+      feedback.textContent = "";
+      endTurn(); // After 1.5s, continue game
+    }, 1500);
   }
 
   document.getElementById("answer-input").value = "";
